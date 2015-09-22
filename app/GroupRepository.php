@@ -6,16 +6,14 @@ function __autoload($class_name) {
  require 'Group.php';
 
 error_reporting(-1);
-class GroupRepository 
-{
+class GroupRepository {
     private $db;
     public $DBH;
-    public function __construct() 
-    {
+    public function __construct() {
         try {
           # SQLite Database
           $this->db = new PDO("sqlite:/home/ubuntu/workspace/StaffManager/app/db/staff.db");
-        }
+        } 
         catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -29,25 +27,18 @@ class GroupRepository
         
         while ($group = $result->fetch()) {
             $allGroups[] = $group;
-        }
+    }
         
         return $allGroups;
     }
     
-    public function deleteGroupById($id) 
-    {
+    public function deleteGroupById($id) {
         $this->db->exec("DELETE FROM Groups WHERE ID = " . $id);
     }
     
-    public function add($group) 
-    {
-        try {
-            $stmt = $this->db->prepare("INSERT INTO Groups (Position, GroupNamePL, GroupNameEn, PeopleCount, IsActive) VALUES (?, ?, ?, ?, ?)");
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+    public function add($group) {
+        $stmt = $this->db->prepare("INSERT INTO Groups (Position, GroupNamePL, GroupNameEn, PeopleCount, IsActive) VALUES (:position, :groupNamePL, :groupNameEN, :peopleCount, :isActive)");
         $stmt->execute((array)$group);
-        //$stmt->execute(array(90, "aaa", "bbb", 22 , 0));
         
     }
     

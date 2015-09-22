@@ -3,8 +3,7 @@ require 'app/GroupRepository.php';
 
 $repo = new GroupRepository();
 
-$newGroup = new Group(12, "aaa", "aaa", 666, 1);
-
-$repo->add((array)$newGroup);
-
+//$newGroup = new Group(13, "zzz", "zzz", 22, 1);
+//$repo->add($newGroup);
+header('Content-Type: application/json');
 echo json_encode($repo->getAll());
